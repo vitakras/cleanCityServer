@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-
 var mongoose = require('mongoose');
 var Beacon = require('../models/Beacon.js');
-
+var geolib = require('geolib');
+var _ = require('underscore');
 
 /* GET all beacons. */
 router.get('/', function(req, res, next) {
@@ -13,6 +13,60 @@ router.get('/', function(req, res, next) {
 		} 
 
 		res.json(beacons);
+	}); 
+});
+
+/* GET closest beacon. */
+router.post('/closest', function(req, res, next) {
+	var loc = req.body.loc;
+	var dist = req.body.dist;
+
+	console.log(req.body.loc);
+	console.log(req.body.dist);
+
+	if (loc == null || dist == null) {
+		var err = new Error("loc or dist can't be null");
+		return next(err);
+	}
+
+	Beacon.find(function (err, beacons) {
+		if (err) { 
+			return next (err); // pass on Error
+		} 
+
+		// Get distance of all beacons
+		var newbeacons = _.map(beacons, function(beacon) {
+			console.log(beacon);
+
+			if (beacon.loc == null) {
+				return null;
+			}
+
+			var output = beacon.toObject();
+
+			output.dist = geolib.getDistance(
+    			{latitude: beacon.loc[0], longitude: beacon.loc[1]},
+    			{latitude: loc[0], longitude: loc[1]}
+				);
+
+			console.log(output)
+			return output;
+		});
+
+		// removes empty beacons or that are greater than distance
+		var output = _.filter(newbeacons, function(beacon){ 
+			if (beacon == null) {
+				return false;
+			}
+
+			if (beacon.dist <= dist) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+
+		res.json(output);
 	}); 
 });
 
