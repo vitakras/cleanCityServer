@@ -57,17 +57,21 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// Configure express
-app.configure('development', function() {
-  mongoose.connect('mongodb://localhost/cleanCity');
-});
+// development only
+if ('development' == app.get('env')) {
+  // Connect to DB
+  mongoose.connect('mongodb://localhost/cleanCity', function(err) {
+    if (err) {
+      console.log('connection error', err);
+    } else {
+      console.log('connection successful');
+    }
+  });
+}
 
-app.configure('test', function() {
-  mongoose.connect('mongodb://'+ process.env.WERCKER_MONGODB_HOST + '/todos');
-});
-
-app.configure('production', function() {
-  mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/todos');
-});
+// production only
+if ('production' == app.get('env')) {
+   mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/cleanCity');
+}
 
 module.exports = app;
