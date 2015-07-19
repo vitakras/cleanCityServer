@@ -38,7 +38,8 @@ router.post('/nonce/transaction', function(req, res, next) {
 
 	console.log(nonceFromTheClient);
 
-	gateway.transaction.sale({amount: '10.00',
+	gateway.transaction.sale({
+		amount: amountCharged,
   		paymentMethodNonce: nonceFromTheClient,
 		}, function (err, result) {
 	
