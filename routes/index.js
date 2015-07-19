@@ -45,7 +45,7 @@ router.post('/nonce/transaction', function(req, res, next) {
 	
 		if (err) {throw err;}
 
-		console.log(util.inspect(result));
+		console.log(result);
     	res.json(result);
 	});
 
