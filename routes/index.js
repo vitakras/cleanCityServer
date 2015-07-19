@@ -32,7 +32,7 @@ router.get('/client_token', function(req, res, next) {
  * Route to process a sale transaction
  */
 router.post('/nonce/transaction', function(req, res, next) {
-	var transaction = request.body;
+	var transaction = req.body;
 	var amountCharged = transaction.amount;
 	var nonceFromTheClient = transaction.payment_method_nonce;
 
