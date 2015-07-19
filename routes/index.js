@@ -34,19 +34,20 @@ router.get('/client_token', function(req, res, next) {
 router.post('/nonce/transaction', function(req, res, next) {
 	var transaction = request.body;
 	var amountCharged = transaction.amount;
-    
-    gateway.transaction.sale({
-    	amount: amountCharged,
-    	paymentMethodNonce: transaction.payment_method_nonce},
-    	function (err, result) {
-    	
-    	if (err)  {
-    		throw err;
-    	}
+	var nonceFromTheClient = transaction.payment_method_nonce;
 
-    	console.log(util.inspect(result));
+	console.log(nonceFromTheClient);
+
+	gateway.transaction.sale({amount: '10.00',
+  		paymentMethodNonce: nonceFromTheClient,
+		}, function (err, result) {
+	
+		if (err) {throw err;}
+
+		console.log(util.inspect(result));
     	res.json(result);
-  	});
+	});
+
 });
 
 module.exports = router;
