@@ -136,8 +136,17 @@ router.put('/:id', function(req, res, next) {
 
 /* DELETE /beacons/:id */
 router.delete('/:id', function(req, res, next) {
-	Beacon.findByIDAndRemove(req.params.id, function (err, post) {
-		if (err) return next(err);
+	console.log(req.params.id);
+
+	Beacon.findByIdAndRemove(req.params.id, function (err, post) {
+
+		if (err) { 
+			console.log("fuc");
+			console.log(err);
+			return next(err);
+		}
+
+		console.log("here");
 		res.json(post);
 	});
 });

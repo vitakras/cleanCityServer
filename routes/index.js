@@ -3,10 +3,10 @@ var router = express.Router();
 var braintree = require("braintree");
 
 var gateway = braintree.connect({
-  environment: braintree.Environment.Sandbox,
-  merchantId: "kk9kgdz22f4hcdd5",
-  publicKey: "mkt74f8zbdprkn6k",
-  privateKey: "f094b7cba797f3d0da836c894d46aba5"
+    environment:  braintree.Environment.Sandbox,
+    merchantId:   'kk9kgdz22f4hcdd5',
+    publicKey:    'mkt74f8zbdprkn6k',
+    privateKey:   'f094b7cba797f3d0da836c894d46aba5'
 });
 
 /* GET home page. */
