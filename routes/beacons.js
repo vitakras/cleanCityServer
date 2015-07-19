@@ -75,7 +75,8 @@ router.post('/', function(req, res, next) {
 	var beacon = new Beacon({
 		name: req.body.name,
 		loc: req.body.loc,
-		full: req.body.full
+		full: req.body.full,
+		beacon_type: req.body.beacon_type
 	});
 
 	console.log(beacon);
@@ -109,10 +110,9 @@ router.put('/:id', function(req, res, next) {
 			return next(err);
 		}
 
-		//tank.size = 'large';
-
 		beacon.name = req.body.name ? req.body.name : beacon.name;
 		beacon.loc = req.body.loc ? req.body.loc : beacon.loc;
+		beacon.beacon_type = req.body.beacon_type ? req.body.beacon_type  : beacon.beacon_type; 
 		
 		console.log(req.body.full );
 		if (req.body.full != null) {

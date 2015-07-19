@@ -6,7 +6,8 @@ var BeaconSchema = new mongoose.Schema({
     	type: [Number],  // [<longitude>, <latitude>]
     	index: '2d'      // create the geospatial index
     	},
-    full: Boolean
+    full: Boolean,
+    beacon_type: String
 });
 
 module.exports = mongoose.model('Beacon', BeaconSchema);
