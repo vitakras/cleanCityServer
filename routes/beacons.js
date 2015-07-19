@@ -75,8 +75,7 @@ router.post('/', function(req, res, next) {
 	var beacon = new Beacon({
 		name: req.body.name,
 		loc: req.body.loc,
-		full: req.body.full,
-		beacon_type: req.body.beacon_type
+		full: req.body.full
 	});
 
 	console.log(beacon);
